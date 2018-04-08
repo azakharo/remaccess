@@ -3,6 +3,13 @@ import 'jquery'
 import 'bootstrap/dist/js/bootstrap.bundle.js'
 import './css/index.css'
 
+// Antd CSS imports
+import 'antd/lib/style/index.css';
+import 'antd/lib/pagination/style/index.css';
+
+import LocaleProvider from 'antd/lib/locale-provider';
+import ruRu from 'antd/lib/locale-provider/ru_RU';
+
 import React from 'react'
 import { render } from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
@@ -47,15 +54,17 @@ const AppRoute = withRouter(App)
 
 render(
   <Provider store={store}>
-    <Router history={history}>
-      <AppRoute>
-        <Switch>
-          <Route exact path="/" component={TestAssignment} />
-          <Route exact path="/orders" component={OrderList} />
-          <Route exact path="/quotes" component={QuoteList} />
-        </Switch>
-      </AppRoute>
-    </Router>
+    <LocaleProvider locale={ruRu}>
+      <Router history={history}>
+        <AppRoute>
+          <Switch>
+            <Route exact path="/" component={TestAssignment} />
+            <Route exact path="/orders" component={OrderList} />
+            <Route exact path="/quotes" component={QuoteList} />
+          </Switch>
+        </AppRoute>
+      </Router>
+    </LocaleProvider>
   </Provider>,
   document.getElementById('root')
 )

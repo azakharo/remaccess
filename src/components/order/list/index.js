@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Pagination from 'antd/lib/pagination'
+import style from './style.css'
 
 import {
   DisplayPage,
@@ -74,9 +76,14 @@ class PageOrders extends React.Component {
               <dt>Всего страниц</dt><dd>{this.props.orders.pages}</dd>
               <dt>Всего записей</dt><dd>{this.props.orders.records}</dd>
             </dl>
-            <button onClick={() => this.setPage(1)}>Страница 1</button>
-            <button onClick={() => this.setPage(2)}>Страница 2</button>
-            <button onClick={() => this.setPage(3)}>Страница 3</button>
+            <div className={style.paginationSection}>
+              <Pagination showQuickJumper
+                          defaultPageSize={20}
+                          hideOnSinglePage={true}
+                          defaultCurrent={1} current={this.state.pageNum}
+                          total={this.props.orders.records}
+                          onChange={this.onPageChanged.bind(this)} />
+            </div>
           </div>
         }
         <OrderList
@@ -85,6 +92,10 @@ class PageOrders extends React.Component {
           contracts={this.props.contracts} />
       </DisplayPage>
     )
+  }
+
+  onPageChanged(pageNumber) {
+    this.setPage(pageNumber);
   }
 }
 
