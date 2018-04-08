@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Pagination from 'antd/lib/pagination'
+import Spin from 'antd/lib/spin'
 import style from './style.css'
 
 import {
@@ -71,25 +72,27 @@ class PageOrders extends React.Component {
           statusFilter={this.state.statusFilter}
           statusFilterChange={this.inputStatusFilter} />
         {this.props.orders &&
-          <div className="alert alert-secondary">
-            <p>Тестовый блок</p>
-            <dl>
-              <dt>Страница</dt><dd>{this.state.pageNum}</dd>
-              <dt>Всего страниц</dt><dd>{this.props.orders.pages}</dd>
-              <dt>Всего записей</dt><dd>{this.props.orders.records}</dd>
-            </dl>
+          <Spin spinning={loading} size="large">
+            <div className="alert alert-secondary">
+              <p>Тестовый блок</p>
+              <dl>
+                <dt>Страница</dt><dd>{this.state.pageNum}</dd>
+                <dt>Всего страниц</dt><dd>{this.props.orders.pages}</dd>
+                <dt>Всего записей</dt><dd>{this.props.orders.records}</dd>
+              </dl>
 
-            {/*Pagination*/}
-            <div className={style.paginationSection}>
-              <Pagination showQuickJumper
-                          defaultPageSize={20}
-                          hideOnSinglePage={true}
-                          defaultCurrent={1} current={this.state.pageNum}
-                          total={this.props.orders.records}
-                          onChange={this.onPageChanged.bind(this)} />
+              {/*Pagination*/}
+              <div className={style.paginationSection}>
+                <Pagination showQuickJumper
+                            defaultPageSize={20}
+                            hideOnSinglePage={true}
+                            defaultCurrent={1} current={this.state.pageNum}
+                            total={this.props.orders.records}
+                            onChange={this.onPageChanged.bind(this)} />
+              </div>
+
             </div>
-
-          </div>
+          </Spin>
         }
         <OrderList
           orders={this.props.orders}

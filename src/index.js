@@ -6,6 +6,7 @@ import './css/index.css'
 // Antd CSS imports
 import 'antd/lib/style/index.css';
 import 'antd/lib/pagination/style/index.css';
+import 'antd/lib/spin/style/index.css';
 
 import LocaleProvider from 'antd/lib/locale-provider';
 import ruRu from 'antd/lib/locale-provider/ru_RU';
