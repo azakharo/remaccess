@@ -6,7 +6,8 @@ const defaultState = {
   pages: 1,
   records: 0,
   quotations: [],
-  loading: false
+  loading: false,
+  currentPage: 1
 };
 
 export const quoteListData = (state = defaultState, action) =>

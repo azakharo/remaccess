@@ -24,7 +24,6 @@ class PageQuotes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageNum: 1,
       quotationId: "",
       onlyMy: false,
       thisSalesOrigin: true,
@@ -32,8 +31,8 @@ class PageQuotes extends React.Component {
     }
   }
 
-  sendRequest = () => this.props.loadData({
-    pageNum: this.state.pageNum,
+  sendRequest = (pageNum) => this.props.loadData({
+    pageNum,
     quotationId: this.state.quotationId,
     onlyMy: this.state.onlyMy,
     thisSalesOrigin: this.state.thisSalesOrigin,
@@ -41,11 +40,11 @@ class PageQuotes extends React.Component {
   })
 
 
-  componentDidMount() {
-    this.sendRequest()
+  componentWillMount() {
+    this.sendRequest(this.props.quotes.currentPage)
   }
 
-  submitForm = () => this.setState({ pageNum: 1 }, this.sendRequest)
+  submitForm = () => this.sendRequest(1)
 
   inputQuotationId = (quotationId) => this.setState({ quotationId })
 
@@ -55,10 +54,11 @@ class PageQuotes extends React.Component {
 
   inputQuotationStatus = (quotationStatus) => this.setState({quotationStatus})
 
-  setPage = (pageNum) => this.setState({ pageNum }, this.sendRequest)
+  setPage = (pageNum) => this.sendRequest(pageNum)
 
   render() {
     const loading = this.props.quotes.loading;
+    const currentPage = this.props.quotes.currentPage;
 
     return (
       <DisplayPage title="Запросы">
@@ -79,7 +79,7 @@ class PageQuotes extends React.Component {
               <p>Тестовый блок</p>
               <dl>
                 <dt>Страница</dt>
-                <dd>{this.state.pageNum}</dd>
+                <dd>{currentPage}</dd>
                 <dt>Всего страниц</dt>
                 <dd>{this.props.quotes.pages}</dd>
                 <dt>Всего записей</dt>
@@ -91,7 +91,7 @@ class PageQuotes extends React.Component {
                 <Pagination showQuickJumper
                             defaultPageSize={20}
                             hideOnSinglePage={true}
-                            defaultCurrent={1} current={this.state.pageNum}
+                            current={currentPage}
                             total={this.props.quotes.records}
                             onChange={this.onPageChanged.bind(this)}/>
               </div>

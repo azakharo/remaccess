@@ -23,7 +23,7 @@ function* requestQuoteListAction(sessionKey, action) {
     onlyMy,
     thisSalesOrigin,
     quotationStatus,
-  } = action
+  } = action;
   const response = yield call(quoteList, {
     sessionKey,
     pageNum,
@@ -31,8 +31,9 @@ function* requestQuoteListAction(sessionKey, action) {
     onlyMy,
     thisSalesOrigin,
     quotationStatus,
-  })
-  yield put(processQuoteList(response))
+  });
+  const respImproved = {...response, currentPage: pageNum};
+  yield put(processQuoteList(respImproved))
 }
 
 export default function*(sessionKey) {
