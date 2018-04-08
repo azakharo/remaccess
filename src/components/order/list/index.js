@@ -56,6 +56,8 @@ class PageOrders extends React.Component {
   setPage = (pageNum) => this.setState({ pageNum }, this.sendRequest)
 
   render() {
+    const loading = this.props.orders.loading;
+
     return (
       <DisplayPage title="Заказы">
         <OrderFilter
