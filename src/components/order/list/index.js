@@ -24,7 +24,6 @@ class PageOrders extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageNum: 1,
       salesId: "",
       onlyMy: false,
       thisSalesOrigin: true,
@@ -32,19 +31,19 @@ class PageOrders extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.sendRequest()
+  componentWillMount() {
+    this.sendRequest(this.props.orders.currentPage);
   }
 
-  sendRequest = () => this.props.loadData({
-    pageNum: this.state.pageNum,
+  sendRequest = (pageNum) => this.props.loadData({
+    pageNum,
     salesId: this.state.salesId,
     onlyMy: this.state.onlyMy,
     thisSalesOrigin: this.state.thisSalesOrigin,
     statusFilter: this.state.statusFilter,
   })
 
-  submitForm = () => this.setState({ pageNum: 1 }, this.sendRequest)
+  submitForm = () => this.sendRequest(1)
 
   inputSalesId = (salesId) => this.setState({salesId})
 
@@ -54,10 +53,11 @@ class PageOrders extends React.Component {
 
   inputStatusFilter = (statusFilter) => this.setState({statusFilter})
 
-  setPage = (pageNum) => this.setState({ pageNum }, this.sendRequest)
+  setPage = (pageNum) => this.sendRequest(pageNum)
 
   render() {
     const loading = this.props.orders.loading;
+    const currentPage = this.props.orders.currentPage;
 
     return (
       <DisplayPage title="Заказы">
@@ -76,7 +76,7 @@ class PageOrders extends React.Component {
             <div className="alert alert-secondary">
               <p>Тестовый блок</p>
               <dl>
-                <dt>Страница</dt><dd>{this.state.pageNum}</dd>
+                <dt>Страница</dt><dd>{currentPage}</dd>
                 <dt>Всего страниц</dt><dd>{this.props.orders.pages}</dd>
                 <dt>Всего записей</dt><dd>{this.props.orders.records}</dd>
               </dl>
@@ -86,7 +86,7 @@ class PageOrders extends React.Component {
                 <Pagination showQuickJumper
                             defaultPageSize={20}
                             hideOnSinglePage={true}
-                            defaultCurrent={1} current={this.state.pageNum}
+                            current={currentPage}
                             total={this.props.orders.records}
                             onChange={this.onPageChanged.bind(this)} />
               </div>

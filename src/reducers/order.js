@@ -6,7 +6,8 @@ const defaultState = {
   pages: 1,
   records: 0,
   sales: [],
-  loading: false
+  loading: false,
+  currentPage: 1
 };
 
 export const orderListData = (state = defaultState, action) => {

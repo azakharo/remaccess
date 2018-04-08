@@ -23,7 +23,7 @@ function* requestOrderListAction(sessionKey, action) {
     onlyMy,
     thisSalesOrigin,
     statusFilter
-  } = action
+  } = action;
   const response = yield call(orderList, {
     sessionKey,
     pageNum,
@@ -31,8 +31,9 @@ function* requestOrderListAction(sessionKey, action) {
     onlyMy,
     thisSalesOrigin,
     statusFilter,
-  })
-  yield put(processOrderList(response))
+  });
+  const respImproved = {...response, currentPage: pageNum};
+  yield put(processOrderList(respImproved));
 }
 
 export default function*(sessionKey) {
