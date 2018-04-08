@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Pagination from 'antd/lib/pagination'
+import style from './style.css'
 
 import {
     DisplayPage,
@@ -76,15 +78,28 @@ class PageQuotes extends React.Component {
                 <dt>Всего страниц</dt><dd>{this.props.quotes.pages}</dd>
                 <dt>Всего записей</dt><dd>{this.props.quotes.records}</dd>
               </dl>
-              <button onClick={() => this.setPage(1)}>Страница 1</button>
-              <button onClick={() => this.setPage(2)}>Страница 2</button>
-              <button onClick={() => this.setPage(3)}>Страница 3</button>
+
+              {/*Pagination*/}
+              <div className={style.paginationSection}>
+                <Pagination showQuickJumper
+                            defaultPageSize={20}
+                            hideOnSinglePage={true}
+                            defaultCurrent={1} current={this.state.pageNum}
+                            total={this.props.quotes.records}
+                            onChange={this.onPageChanged.bind(this)} />
+              </div>
+
             </div>
           }
         <QuoteList quotes={this.props.quotes} />
       </DisplayPage>
     )
   }
+
+  onPageChanged(pageNumber) {
+    this.setPage(pageNumber);
+  }
+
 }
 
 export default connect(

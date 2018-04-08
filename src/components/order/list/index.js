@@ -76,6 +76,8 @@ class PageOrders extends React.Component {
               <dt>Всего страниц</dt><dd>{this.props.orders.pages}</dd>
               <dt>Всего записей</dt><dd>{this.props.orders.records}</dd>
             </dl>
+
+            {/*Pagination*/}
             <div className={style.paginationSection}>
               <Pagination showQuickJumper
                           defaultPageSize={20}
@@ -84,6 +86,7 @@ class PageOrders extends React.Component {
                           total={this.props.orders.records}
                           onChange={this.onPageChanged.bind(this)} />
             </div>
+
           </div>
         }
         <OrderList
@@ -97,6 +100,7 @@ class PageOrders extends React.Component {
   onPageChanged(pageNumber) {
     this.setPage(pageNumber);
   }
+
 }
 
 export default connect(
