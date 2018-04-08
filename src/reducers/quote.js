@@ -1,15 +1,24 @@
 import {
-  QUOTE_LIST_PROCESS,
+  QUOTE_LIST_REQUEST, QUOTE_LIST_PROCESS
 } from '../actions/types'
 
-export const quoteListData = (state = null, action) =>
+const defaultState = {
+  pages: 1,
+  records: 0,
+  quotations: [],
+  loading: false
+};
+
+export const quoteListData = (state = defaultState, action) =>
 {
   switch (action.type) {
+    case QUOTE_LIST_REQUEST:
+      return {...state, loading: true};
     case QUOTE_LIST_PROCESS:
-      return action.response
+      return {...action.response, loading: false};
     default:
       return state
   }
-}
+};
 
-export const selectQuoteListData = (state) => state.quoteListData
+export const selectQuoteListData = (state) => state.quoteListData;

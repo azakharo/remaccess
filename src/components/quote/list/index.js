@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Pagination from 'antd/lib/pagination'
+import Spin from 'antd/lib/spin'
 import style from './style.css'
 
 import {
@@ -57,6 +58,8 @@ class PageQuotes extends React.Component {
   setPage = (pageNum) => this.setState({ pageNum }, this.sendRequest)
 
   render() {
+    const loading = this.props.quotes.loading;
+
     return (
       <DisplayPage title="Запросы">
         <QuoteFilter
@@ -71,12 +74,16 @@ class PageQuotes extends React.Component {
           quotationStatusChange={this.inputQuotationStatus}
           />
         {this.props.quotes &&
+          <Spin spinning={loading} size="large">
             <div className="alert alert-secondary">
               <p>Тестовый блок</p>
               <dl>
-                <dt>Страница</dt><dd>{this.state.pageNum}</dd>
-                <dt>Всего страниц</dt><dd>{this.props.quotes.pages}</dd>
-                <dt>Всего записей</dt><dd>{this.props.quotes.records}</dd>
+                <dt>Страница</dt>
+                <dd>{this.state.pageNum}</dd>
+                <dt>Всего страниц</dt>
+                <dd>{this.props.quotes.pages}</dd>
+                <dt>Всего записей</dt>
+                <dd>{this.props.quotes.records}</dd>
               </dl>
 
               {/*Pagination*/}
@@ -86,11 +93,12 @@ class PageQuotes extends React.Component {
                             hideOnSinglePage={true}
                             defaultCurrent={1} current={this.state.pageNum}
                             total={this.props.quotes.records}
-                            onChange={this.onPageChanged.bind(this)} />
+                            onChange={this.onPageChanged.bind(this)}/>
               </div>
 
             </div>
-          }
+        </Spin>
+        }
         <QuoteList quotes={this.props.quotes} />
       </DisplayPage>
     )
